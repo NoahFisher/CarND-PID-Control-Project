@@ -30,18 +30,29 @@ actively account for this. In the final solution, this gain is ignored completel
 Through a manual approach (inspired by Twiddle and bisection) the parameters were manually tuned.
 
 *Note: all gains are negative.
-|  P  |  I  |  D  |
-|-----|-----|-----|
-| 1.0 | 0.0 | 0.0 |
-| 0.1 | 0.0 | 0.0 |
-|0.07 | 0.0 | 0.25| Not reacting strong enough post-bridge
-|0.05 | 0.0 | 0.17| Not reacting strong enough post-bridge
-|0.055| 0.0 | 1.0 | handling v well. not making turns strong enough.
-|0.10 | 0.0 | 1.0 | makes it around the track!
-|0.10 | 0.0 | 10.0| A more stable run around the track
+|  P  |  I  |  D  | Notes |
+|-----|-----|-----|------|
+| 1.0 | 0.0 | 0.0 |---1---|
+| 0.1 | 0.0 | 0.0 |---2---|
+| 0.1 | 0.0 | 1.0 |---3---|
+| 0.1 | 0.0 | 10.0|---4---|
+
+1. Take note of how changing P impacts the car's behavior, reacting very strongly to variations in
+   the road
+2. Take note of how changing P impacts the car's behavior, lots of oscillation.
+3. Take note of how changing D impacts the car's behavior, made it around the track!
+4. Take note of how changing D impacts the car's behavior, much smoother around the track.
 
 To run:
 ```
 $ cmake .. && make && ./pid -0.10 0.0 -10.0
 ```
+
+---
+
+Reflection:
+
+Upon further reflection, its clear that more optimization could be done to find a better solution,
+but without a cost function to mathematically minimize, this will end up being a time consuming
+process.
 
