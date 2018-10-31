@@ -30,6 +30,7 @@ actively account for this. In the final solution, this gain is ignored completel
 Through a manual approach (inspired by Twiddle and bisection) the parameters were manually tuned.
 
 *Note: all gains are negative.
+
 |  P  |  I  |  D  | Notes |
 |-----|-----|-----|------|
 | 1.0 | 0.0 | 0.0 |---1---|
