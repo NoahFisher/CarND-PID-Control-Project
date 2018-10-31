@@ -28,12 +28,18 @@ std::string hasData(std::string s) {
   return "";
 }
 
-int main()
+int main(int argc, char *argv[])
 {
   uWS::Hub h;
 
+  // Gain variables are determined via trial and error (in an ideal scenario we'd use a gradient
+  // descent or "twiddle" algorithm to find these, but since the simulator cannot run in
+  // a "headless" manner, it's difficult to determine the error or cost function)
+  double K_p = atof(argv[1]); // magnitude of turn
+  double K_i = atof(argv[2]); // accounts for drift
+  double K_d = atof(argv[3]); // rate of turn
   PID pid;
-  // TODO: Initialize the pid variable.
+  pid.Init(K_p, K_i, K_d);
 
   h.onMessage([&pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
@@ -52,12 +58,14 @@ int main()
           double angle = std::stod(j[1]["steering_angle"].get<std::string>());
           double steer_value;
           /*
-          * TODO: Calcuate steering value here, remember the steering value is
-          * [-1, 1].
-          * NOTE: Feel free to play around with the throttle and speed. Maybe use
-          * another PID controller to control the speed!
-          */
-          
+           * Calcuate steering value here, remember the steering value is
+           * [-1, 1].
+           * NOTE: Feel free to play around with the throttle and speed. Maybe use
+           * another PID controller to control the speed!
+           */
+          pid.UpdateError(cte);
+          steer_value = pid.TotalError();
+
           // DEBUG
           std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
 

@@ -11,8 +11,8 @@ public:
   double d_error;
 
   /*
-  * Coefficients
-  */ 
+  * Coefficients (are these the gain coefficients?)
+  */
   double Kp;
   double Ki;
   double Kd;
